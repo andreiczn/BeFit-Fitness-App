@@ -9,7 +9,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
     <Stack alignItems="flex-start" mt="37px" justifyContent="center" p="20px">
       <Box position="relative">
         <Typography fontWeight={700} sx={{ fontSize: { lg: '44px', xs: '30px' } }} mb="49px" textAlign="left">
-          What Would You Like<br />To Work Today?
+          What Would You Like<br />To Work Out Today?
         </Typography>
       </Box>
       <Box sx={{ position: 'relative', width: '100%', p: '20px' }}>

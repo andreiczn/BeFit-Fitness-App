@@ -4,7 +4,7 @@ import ExerciseCard from './ExerciseCard';
 
 const Exercises = ({ exercises }) => {
   return (
-    <Box id="exercises" sx={{ mt: { lg: '110px' } }} mt="50px" p="20px">
+    <Box id="exercises" sx={{ mt: { lg: '110px' } }} mt="50px" p="20px" className="page-transition">
       <Typography variant="h4" fontWeight="bold" sx={{ fontSize: { lg: '44px', xs: '30px' } }} mb="46px">
         Explore The Exercises
       </Typography>

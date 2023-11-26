@@ -10,7 +10,7 @@ const Home = () => {
   const [bodyPart, setBodyPart] = useState('all');
 
   return (
-    <Box>
+    <Box className="page-transition">
       <HeroBanner />
       <SearchExercises setExercises={setExercises} bodyPart={bodyPart} setBodyPart={setBodyPart} />
       <Exercises setExercises={setExercises} exercises={exercises} bodyPart={bodyPart} />
