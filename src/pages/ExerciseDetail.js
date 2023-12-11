@@ -1,43 +1,40 @@
-import React from 'react';
-import { Box, Typography } from '@mui/material';
-import ExerciseList from '../components/ExerciseList';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { Box } from '@mui/material';
+
+import { exerciseOptions, fetchData, youtubeOptions } from '../utils/fetchData';
+import Detail from '../components/Detail';
+import ExerciseVideos from '../components/ExerciseVideos';
+import SimilarExercises from '../components/SimilarExercises';
 
 const ExerciseDetail = () => {
-  const exercises = [
-    {
-      id: 'squat',
-      name: 'Squat',
-      bodyPart: 'Lower Body',
-      target: 'Legs',
-      gifUrl: 'https://www.inspireusafoundation.org/wp-content/uploads/2021/06/bodyweight-squat-2.gif',
-      
-    },
-    {
-      id: 'bicep-curl',
-      name: 'Bicep Curl',
-      bodyPart: 'Upper Body',
-      target: 'Arms',
-      gifUrl: 'https://www.inspireusafoundation.org/wp-content/uploads/2023/01/inner-bicep-curl.gif',
-      
-    },
-    {
-      id: 'sit-ups',
-      name: 'Sit-ups',
-      bodyPart: 'Core',
-      target: 'Abs',
-      gifUrl: 'https://fitnessprogramer.com/wp-content/uploads/2015/11/Crunch.gif',
-      
-    },
-  ];
+    const [exerciseDetail, setExerciseDetail] = useState({});
+    const [exerciseVideos, setExerciseVideos] = useState([]);
+    const { id } = useParams();
 
-  return (
-    <Box id="exercise-detail" sx={{ mt: { lg: '110px' } }} mt="50px" p="20px">
-      <Typography variant="h4" fontWeight="bold" sx={{ fontSize: { lg: '44px', xs: '30px' } }} mb="46px">
-        Here's What You Can Do!
-      </Typography>
-      <ExerciseList exercises={exercises} />
-    </Box>
-  );
-};
+    useEffect(() => {
+        const fetchExercisesData = async () => {
+            const exerciseDbUrl = 'https://exercisedb.p.rapidapi.com';
+            const youtubeSearchUrl = 'https://youtube-search-and-download.p.rapidapi.com';
+        
+            const exerciseDetailData = await fetchData(`${exerciseDbUrl}/exercises/exercise/${id}`, exerciseOptions);
+        setExerciseDetail(exerciseDetailData);
+
+        const exerciseVideosData = await fetchData(`${youtubeSearchUrl}/search?query=${exerciseDetailData.name} exercise`, youtubeOptions);
+        setExerciseVideos(exerciseVideosData.contents);
+
+        }
+        
+
+        fetchExercisesData();
+    }, [id]);
+    return (
+        <Box sx={{ mt: { lg: '96px', xs: '60px' } }}>
+          <Detail exerciseDetail={exerciseDetail}/>
+          <ExerciseVideos exerciseVideos={exerciseVideos} name={exerciseDetail.name} />
+          <SimilarExercises />
+        </Box>
+      );
+}
 
 export default ExerciseDetail;

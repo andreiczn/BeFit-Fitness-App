@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 import { Box, Typography } from '@mui/material';
-
+import ExerciseCard from './ExerciseCard';
 import BodyPart from './BodyPart';
-import LeftArrowIcon from '../assets/icons/left-arrow.png';
 import RightArrowIcon from '../assets/icons/right-arrow.png';
+import LeftArrowIcon from '../assets/icons/left-arrow.png';
 
 const LeftArrow = () => {
   const { scrollPrev } = useContext(VisibilityContext);
 
   return (
     <Typography onClick={() => scrollPrev()} className="right-arrow">
-      <img src={LeftArrowIcon} alt="left-arrow" style={{ width: '20px', height: '20px' }} />
+      <img src={LeftArrowIcon} alt="right-arrow" />
     </Typography>
   );
 };
@@ -21,38 +21,27 @@ const RightArrow = () => {
 
   return (
     <Typography onClick={() => scrollNext()} className="left-arrow">
-      <img src={RightArrowIcon} alt="right-arrow" style={{ width: '20px', height: '20px' }} />
+      <img src={RightArrowIcon} alt="right-arrow" />
     </Typography>
   );
 };
 
-const HorizontalScrollbar = ({ bodyPart, setBodyPart }) => {
-  const data = [
-    { name: 'Upper Body', logo: 'upper.png' },
-    { name: 'Lower Body', logo: 'craci.png' },
-    { name: 'Mid/Core', logo: 'midcore.png' },
-    { name: 'Cardio/Resistance Training', logo: 'cardio.png' },
-  ];
-
+const HorizontalScrollbar = ({ data, bodyParts, setBodyPart, bodyPart }) => {
   return (
-    <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} style={{ display: 'flex', justifyContent: 'center' }}>
-      {data.map((item) => (
-        <Box
-          key={item.name}
-          itemId={item.name}
-          title={item.name}
-          m="0 40px"
-          sx={{
-            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', // Add the boxShadow property using sx
-            borderRadius: '4px', // Optional: Add border-radius for a rounded look
-          }}
-        >
-          <BodyPart name={item.name} logo={item.logo} setBodyPart={setBodyPart} bodyPart={bodyPart} />
-        </Box>
-      ))}
+    <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
+        {
+            data.map((item) => 
+                <Box
+                  key={item.id || item}
+                  itemId={item.id || item}
+                  title={item.id || item}
+                  m="0 40px"
+                >
+                  {bodyParts ? <BodyPart item={item} setBodyPart={setBodyPart} bodyPart={bodyPart} /> : <ExerciseCard exercise={item} /> }
+                </Box> 
+        )}
     </ScrollMenu>
-  );
-};
+  )
+}
 
-export default HorizontalScrollbar;
-
+export default HorizontalScrollbar; 
